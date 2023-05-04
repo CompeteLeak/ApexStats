@@ -1,6 +1,6 @@
 # ApexStats
 Description 
-This is a Java app that will be a showcase of my Apec Stats 
+This is a Java app that will be a showcase of my Apex Stats 
 
 Dependencies 
 ===============================================================
