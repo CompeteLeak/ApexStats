@@ -24,6 +24,11 @@ mvn package
 
 Run Project 
 java --module-path /your/path/to/javafx-sdk-20.0.1/lib --add-modules javafx.controls -cp target/ApexStats-1.0-SNAPSHOT.jar ApexStatsApp
+--------------------------------------------
+***** Lastly there is a resources file in the root directory. YOU NEED TO ADD A config.yaml there 
+username: ****
+api_key: ************
+platform: ***
 
 
 
