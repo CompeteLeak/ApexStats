@@ -25,27 +25,17 @@ import java.io.IOException;
 
 public class ApexStatsApp extends Application {
   private static final String API_URL = "https://public-api.tracker.gg/v2/apex/standard/profile/{platform}/{username}";
-  private static Properties props = new Properties();
-  private static String username;
-  private static String apiKey;
-  private static String platform;
-
+  YamlVars envLoad = new YamlVars(); 
+  
   @Override
   public void start(Stage primaryStage) {
 
     //load env vars
-    try {
-      props.load(new FileInputStream("resources/config.yaml"));
-      username = props.getProperty("username");
-      apiKey = props.getProperty("api_key");
-      platform = props.getProperty("platform");
-    } catch (IOException e) {
-      System.err.println("Error loading config file: " + e.getMessage());
-    }
+    envLoad.connectYaml();
 
     // Set up the JavaFX UI
 
-    String apiUrl = API_URL.replace("{platform}", platform).replace("{username}", username);
+    String apiUrl = API_URL.replace("{platform}", envLoad.platform).replace("{username}", envLoad.username);
 
     Label killsLabel = new Label("Fetching kills...");
     killsLabel.setStyle("-fx-font-size: 48pt; -fx-font-weight: bold; -fx-font-family: Impact;");
@@ -55,7 +45,7 @@ public class ApexStatsApp extends Application {
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()
       .uri(URI.create(apiUrl))
-      .header("TRN-Api-Key", apiKey) // Add the API key as a header
+      .header("TRN-Api-Key", envLoad.apiKey) // Add the API key as a header
       .timeout(Duration.ofSeconds(10)) // Add timeout of 10 seconds
       .build();
     client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
