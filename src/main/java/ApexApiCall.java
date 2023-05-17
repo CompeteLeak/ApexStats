@@ -11,8 +11,9 @@ import javafx.scene.paint.Color;
 public class ApexApiCall{
 
 	public Label killsLabel = new Label("Fetching kills...");
+	String newLine = System.getProperty("line.separator");//This will retrieve line separator dependent on OS.
 
-	public void getKills(){
+	public void playerOneData(){
 
 	YamlVars envLoad = new YamlVars();
 	envLoad.connectYaml();
@@ -42,12 +43,13 @@ public class ApexApiCall{
 
           // Parse the stats from the JSON response
           int kills = segments.getJSONObject("stats").getJSONObject("kills").getInt("value");
+          int damage = segments.getJSONObject("stats").getJSONObject("damage").getInt("value");
+          String rankScore = segments.getJSONObject("stats").getJSONObject("rankScore").getJSONObject("metadata").getString("rankName");
 
     	  killsLabel.setStyle("-fx-font-size: 48pt; -fx-font-weight: bold; -fx-font-family: Impact;");
           killsLabel.setTextFill(Color.WHITE);
           // Update the UI with the parsed stats
-          killsLabel.setText("Kills: " + kills);
-
+          killsLabel.setText(envLoad.username + newLine + "KILLS: " + kills + newLine + "DAMAGE: " + damage + newLine + "RANK: " + rankScore);
 
         });
       });
