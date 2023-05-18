@@ -29,8 +29,8 @@ public class ApexStatsApp extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        ApexApiCall playerOne = new ApexApiCall();
-        playerOne.playerOneData();
+        ApexApiCall playerData = new ApexApiCall();
+        playerData.playerOneData();
     }
 
     public static void updateUI(String username, int kills, int damage, String rankScore) {
