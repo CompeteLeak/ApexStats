@@ -1,33 +1,43 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 
 public class ApexStatsApp extends Application {
 
-  ApexApiCall playerOne = new ApexApiCall();
+    private static Label killsLabel;
 
-  @Override
-  public void start(Stage primaryStage) {
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-    // Make the API request
-    playerOne.playerOneData();
+    @Override
+    public void start(Stage primaryStage) {
+        killsLabel = new Label("Fetching Stats...");
+        killsLabel.setStyle("-fx-font-size: 48pt; -fx-font-weight: bold; -fx-font-family: Impact;");
+        killsLabel.setTextFill(Color.WHITE);
 
-    //update UI
-    StackPane root = new StackPane();
-    root.setStyle("-fx-background-color: #121212;");
-    root.getChildren().addAll(playerOne.killsLabel);
+        StackPane root = new StackPane();
+        root.setStyle("-fx-background-color: #121212;");
+        root.getChildren().addAll(killsLabel);
 
-    Scene scene = new Scene(root, 400, 300);
-    primaryStage.setTitle("My Apex Kills");
-    primaryStage.setScene(scene);
+        Scene scene = new Scene(root, 400, 300);
+        primaryStage.setTitle("Leaderboards");
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
-    // Show the JavaFX window
-    primaryStage.show();
-  }
+        ApexApiCall playerOne = new ApexApiCall();
+        playerOne.playerOneData();
+    }
 
-  public static void main(String[] args) {
-
-    launch(args);
-  }
+    public static void updateUI(String username, int kills, int damage, String rankScore) {
+        Platform.runLater(() -> {
+            String newLine = System.getProperty("line.separator");
+            killsLabel.setText(username + newLine + "KILLS: " + kills + newLine + "DAMAGE: " + damage
+                    + newLine + "RANK: " + rankScore);
+        });
+    }
 }

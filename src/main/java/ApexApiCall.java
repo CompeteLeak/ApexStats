@@ -4,55 +4,49 @@ import java.net.http.HttpResponse;
 import org.json.JSONObject;
 import java.net.URI;
 import java.time.Duration;
+import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
-public class ApexApiCall{
+public class ApexApiCall {
 
-	public Label killsLabel = new Label("Fetching kills...");
-	String newLine = System.getProperty("line.separator");//This will retrieve line separator dependent on OS.
+    static int kills;
+    static int damage;
+    static String rankScore;
+    static YamlVars envLoad = new YamlVars();
+    static String p1;
 
-	public void playerOneData(){
+    public void playerOneData() {
+        envLoad.connectYaml();
+        p1 = envLoad.username.toString();
+        final String API_URL = "https://public-api.tracker.gg/v2/apex/standard/profile/{platform}/{username}";
+        String apiUrl = API_URL.replace("{platform}", envLoad.platform).replace("{username}", p1);
 
-	YamlVars envLoad = new YamlVars();
-	envLoad.connectYaml();
-	final String API_URL = "https://public-api.tracker.gg/v2/apex/standard/profile/{platform}/{username}";
-	String apiUrl = API_URL.replace("{platform}", envLoad.platform).replace("{username}", envLoad.username);
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(apiUrl))
+                .header("TRN-Api-Key", envLoad.apiKey)
+                .timeout(Duration.ofSeconds(10))
+                .build();
 
-		// Set up the JavaFX UI
-   
-    killsLabel.setStyle("-fx-font-size: 48pt; -fx-font-weight: bold; -fx-font-family: Impact;");
-    killsLabel.setTextFill(Color.WHITE);
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenAccept(stats -> {
+                    JSONObject json = new JSONObject(stats);
+                    JSONObject data = json.getJSONObject("data");
+                    JSONObject segments = data.getJSONArray("segments").getJSONObject(0);
 
-	HttpClient client = HttpClient.newHttpClient();
-    HttpRequest request = HttpRequest.newBuilder()
-      .uri(URI.create(apiUrl))
-      .header("TRN-Api-Key", envLoad.apiKey) // Add the API key as a header
-      .timeout(Duration.ofSeconds(10)) // Add timeout of 10 seconds
-      .build();
-    client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-      .thenApply(HttpResponse::body)
-      .thenAccept(stats -> {
+                    kills = segments.getJSONObject("stats").getJSONObject("kills").getInt("value");
+                    damage = segments.getJSONObject("stats").getJSONObject("damage").getInt("value");
+                    rankScore = segments.getJSONObject("stats").getJSONObject("rankScore")
+                            .getJSONObject("metadata").getString("rankName");
 
-        Platform.runLater(() -> {
-          // Update the UI with the response
-          JSONObject json = new JSONObject(stats);
-          JSONObject data = json.getJSONObject("data");
-          JSONObject segments = data.getJSONArray("segments").getJSONObject(0);
-
-          // Parse the stats from the JSON response
-          int kills = segments.getJSONObject("stats").getJSONObject("kills").getInt("value");
-          int damage = segments.getJSONObject("stats").getJSONObject("damage").getInt("value");
-          String rankScore = segments.getJSONObject("stats").getJSONObject("rankScore").getJSONObject("metadata").getString("rankName");
-
-    	  killsLabel.setStyle("-fx-font-size: 48pt; -fx-font-weight: bold; -fx-font-family: Impact;");
-          killsLabel.setTextFill(Color.WHITE);
-          // Update the UI with the parsed stats
-          killsLabel.setText(envLoad.username + newLine + "KILLS: " + kills + newLine + "DAMAGE: " + damage + newLine + "RANK: " + rankScore);
-
-        });
-      });
-
-	}
+                    // Once the API call is complete, update the UI 
+                    ApexStatsApp.updateUI(p1, kills, damage, rankScore);
+                });
+    }
 }
