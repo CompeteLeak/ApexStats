@@ -13,10 +13,8 @@ import java.text.DecimalFormat;
 
 public class ApexApiCall {
 
-  static YamlVars envLoad = new YamlVars();
-  DecimalFormat formatter = new DecimalFormat("#,###");
-
   public void getPlayerData(String playerName, String platform) {
+    YamlVars envLoad = new YamlVars();
     envLoad.connectYaml();
     final String API_URL = "https://public-api.tracker.gg/v2/apex/standard/profile/{platform}/{player}";
     String apiUrl = API_URL.replace("{platform}", platform).replace("{player}", playerName);
@@ -55,6 +53,8 @@ public class ApexApiCall {
   }
 
   private void handleData(String stats, String playerName) {
+    DecimalFormat formatter = new DecimalFormat("#,###");
+
     if (stats == null) {
       // Error occurred, handle accordingly
       return;
