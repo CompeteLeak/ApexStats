@@ -28,12 +28,11 @@ public class ApexStatsApp extends Application {
     primaryStage.show();
 
     ApexApiCall playerData = new ApexApiCall();
-    playerData.getPlayerData(vars.playerOne);
-    playerData.getPlayerData(vars.playerTwo);
-    playerData.getPlayerData(vars.playerThree);
-    playerData.getPlayerData(vars.playerFour);
-    //playerData.getPlayerData(vars.playerFive);
-
+    playerData.getPlayerData(vars.playerOne, vars.platform1);
+    playerData.getPlayerData(vars.playerTwo, vars.platform1);
+    playerData.getPlayerData(vars.playerThree, vars.platform1);
+    playerData.getPlayerData(vars.playerFour, vars.platform1);
+    playerData.getPlayerData(vars.playerFive, vars.platform2);
 
     // For aesthetics, may consider adding a separator line between the players
     // VBox.setMargin(vbox.getChildren().get(0), new Insets(0, 0, 10, 0));
@@ -55,14 +54,14 @@ public class ApexStatsApp extends Application {
       // Create a new label for the player's information
       Label playerLabel = new Label(username + newLine + "KILLS: " + kills + newLine + "DAMAGE: " + damage +
         newLine + "RANK: " + rankScore);
-      playerLabel.setStyle("-fx-font-size: 25pt; -fx-font-weight: bold; -fx-font-family: Impact;");
+      playerLabel.setStyle("-fx-font-size: 20pt; -fx-font-weight: bold; -fx-font-family: Impact;");
       playerLabel.setTextFill(Color.WHITE);
 
       playerLabel.setPadding(new Insets(0, 0, 0, 0));
       // Add the player's label to the VBox
       vbox.getChildren().add(playerLabel);
       // Set spacing between player labels
-      vbox.setSpacing(40);
+      vbox.setSpacing(20);
     });
   }
 }

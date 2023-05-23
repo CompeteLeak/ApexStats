@@ -16,10 +16,10 @@ public class ApexApiCall {
   static YamlVars envLoad = new YamlVars();
   DecimalFormat formatter = new DecimalFormat("#,###");
 
-  public void getPlayerData(String playerName) {
+  public void getPlayerData(String playerName, String platform) {
     envLoad.connectYaml();
     final String API_URL = "https://public-api.tracker.gg/v2/apex/standard/profile/{platform}/{player}";
-    String apiUrl = API_URL.replace("{platform}", envLoad.platform).replace("{player}", playerName);
+    String apiUrl = API_URL.replace("{platform}", platform).replace("{player}", playerName);
 
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()
@@ -34,7 +34,7 @@ public class ApexApiCall {
       .thenAccept(stats -> handleData(stats, playerName));
   }
 
-  private String handleResponse(HttpResponse<String> response) {
+  private String handleResponse(HttpResponse < String > response) {
     int statusCode = response.statusCode();
     if (statusCode >= 200 && statusCode < 300) {
       return response.body();
@@ -70,7 +70,7 @@ public class ApexApiCall {
       int damage = segments.getJSONObject("stats").getJSONObject("damage").getInt("value");
       String formattedDamage = formatter.format(damage);
       String rankScore = segments.getJSONObject("stats").getJSONObject("rankScore")
-          .getJSONObject("metadata").getString("rankName");
+        .getJSONObject("metadata").getString("rankName");
 
       // Once the API call is complete, update the UI 
       ApexStatsApp.updateUI(playerName, formattedKills, formattedDamage, rankScore);
