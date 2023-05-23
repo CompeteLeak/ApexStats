@@ -4,22 +4,20 @@ import java.net.http.HttpResponse;
 import org.json.JSONObject;
 import java.net.URI;
 import java.time.Duration;
-import javafx.application.Application;
+import java.util.concurrent.CompletableFuture;
 import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import java.text.DecimalFormat;
 
 public class ApexApiCall {
 
   static YamlVars envLoad = new YamlVars();
+  DecimalFormat formatter = new DecimalFormat("#,###");
 
   public void getPlayerData(String playerName) {
     envLoad.connectYaml();
-    DecimalFormat formatter = new DecimalFormat("#,###");
     final String API_URL = "https://public-api.tracker.gg/v2/apex/standard/profile/{platform}/{player}";
     String apiUrl = API_URL.replace("{platform}", envLoad.platform).replace("{player}", playerName);
 
@@ -31,21 +29,59 @@ public class ApexApiCall {
       .build();
 
     client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-      .thenApply(HttpResponse::body)
-      .thenAccept(stats -> {
-        JSONObject json = new JSONObject(stats);
-        JSONObject data = json.getJSONObject("data");
-        JSONObject segments = data.getJSONArray("segments").getJSONObject(0);
+      .thenApply(this::handleResponse)
+      .exceptionally(this::handleError)
+      .thenAccept(stats -> handleData(stats, playerName));
+  }
 
-        int kills = segments.getJSONObject("stats").getJSONObject("kills").getInt("value");
-        String formattedKills = formatter.format(kills);
-        int damage = segments.getJSONObject("stats").getJSONObject("damage").getInt("value");
-        String formattedDamage = formatter.format(damage);
-        String rankScore = segments.getJSONObject("stats").getJSONObject("rankScore")
-        .getJSONObject("metadata").getString("rankName");
+  private String handleResponse(HttpResponse<String> response) {
+    int statusCode = response.statusCode();
+    if (statusCode >= 200 && statusCode < 300) {
+      return response.body();
+    } else {
+      throw new RuntimeException("API request failed with status code: " + statusCode);
+    }
+  }
 
-        // Once the API call is complete, update the UI 
-        ApexStatsApp.updateUI(playerName, formattedKills, formattedDamage, rankScore);
+  private String handleError(Throwable ex) {
+    Platform.runLater(() -> {
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setTitle("Error");
+      alert.setHeaderText("API Request Failed");
+      alert.setContentText(ex.getMessage());
+      alert.showAndWait();
+    });
+    return null; // Returning null to indicate that error handling is complete
+  }
+
+  private void handleData(String stats, String playerName) {
+    if (stats == null) {
+      // Error occurred, handle accordingly
+      return;
+    }
+
+    try {
+      JSONObject json = new JSONObject(stats);
+      JSONObject data = json.getJSONObject("data");
+      JSONObject segments = data.getJSONArray("segments").getJSONObject(0);
+
+      int kills = segments.getJSONObject("stats").getJSONObject("kills").getInt("value");
+      String formattedKills = formatter.format(kills);
+      int damage = segments.getJSONObject("stats").getJSONObject("damage").getInt("value");
+      String formattedDamage = formatter.format(damage);
+      String rankScore = segments.getJSONObject("stats").getJSONObject("rankScore")
+          .getJSONObject("metadata").getString("rankName");
+
+      // Once the API call is complete, update the UI 
+      ApexStatsApp.updateUI(playerName, formattedKills, formattedDamage, rankScore);
+    } catch (Exception e) {
+      Platform.runLater(() -> {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Data Processing Failed");
+        alert.setContentText("An error occurred while processing the API response.");
+        alert.showAndWait();
       });
+    }
   }
 }

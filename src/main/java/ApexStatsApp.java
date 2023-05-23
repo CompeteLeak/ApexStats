@@ -1,7 +1,6 @@
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
@@ -11,8 +10,6 @@ import javafx.geometry.Insets;
 public class ApexStatsApp extends Application {
 
   private static VBox vbox;
-  
-
 
   public static void main(String[] args) {
     launch(args);
@@ -35,6 +32,20 @@ public class ApexStatsApp extends Application {
     playerData.getPlayerData(vars.playerTwo);
     playerData.getPlayerData(vars.playerThree);
     playerData.getPlayerData(vars.playerFour);
+    //playerData.getPlayerData(vars.playerFive);
+
+
+    // For aesthetics, may consider adding a separator line between the players
+    // VBox.setMargin(vbox.getChildren().get(0), new Insets(0, 0, 10, 0));
+
+    // order the players based on their stats before displaying them
+    //AVG damage for evertyone 
+
+    // Ordering the players based on kills (assuming kills is an integer)
+    // vbox.getChildren().sort(Comparator.comparingInt(player -> -Integer.parseInt(((Label) player).getText().split("\n")[1].split(": ")[1])));
+
+    // Ordering the players based on damage (assuming damage is an integer)
+    // vbox.getChildren().sort(Comparator.comparingInt(player -> -Integer.parseInt(((Label) player).getText().split("\n")[2].split(": ")[1])));
   }
 
   public static void updateUI(String username, String kills, String damage, String rankScore) {
