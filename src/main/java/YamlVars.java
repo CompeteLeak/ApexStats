@@ -3,17 +3,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class YamlVars {
-  public static Properties props = new Properties();
-  public static String playerOne;
-  public static String playerTwo;
-  public static String apiKey;
-  public static String platform1;
-  public static String platform2;
-  public static String playerThree;
-  public static String playerFour;
-  public static String playerFive;
+  public String playerOne;
+  public String playerTwo;
+  public String apiKey;
+  public String platform1;
+  public String platform2;
+  public String playerThree;
+  public String playerFour;
+  public String playerFive;
 
   public void connectYaml() {
+    Properties props = new Properties();
 
     try {
       props.load(new FileInputStream("resources/config.yaml"));
@@ -28,7 +28,5 @@ public class YamlVars {
     } catch (IOException e) {
       System.err.println("Error loading config file: " + e.getMessage());
     }
-
   }
-
 }

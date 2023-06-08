@@ -10,6 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import java.text.DecimalFormat;
+import java.util.Comparator;
+import java.util.Objects;
 
 public class ApexApiCall {
 
@@ -17,7 +19,8 @@ public class ApexApiCall {
     YamlVars envLoad = new YamlVars();
     envLoad.connectYaml();
     final String API_URL = "https://public-api.tracker.gg/v2/apex/standard/profile/{platform}/{player}";
-    String apiUrl = API_URL.replace("{platform}", platform).replace("{player}", playerName);
+
+    String apiUrl = API_URL.replace("{platform}", Objects.requireNonNull(platform)).replace("{player}", Objects.requireNonNull(playerName));
 
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()
@@ -69,11 +72,12 @@ public class ApexApiCall {
       String formattedKills = formatter.format(kills);
       int damage = segments.getJSONObject("stats").getJSONObject("damage").getInt("value");
       String formattedDamage = formatter.format(damage);
-      String rankScore = segments.getJSONObject("stats").getJSONObject("rankScore")
-        .getJSONObject("metadata").getString("rankName");
+      String rankScore = segments.getJSONObject("stats").getJSONObject("rankScore").getJSONObject("metadata").getString("rankName");
+      int rank = segments.getJSONObject("stats").getJSONObject("rankScore").getInt("value");
+      String formattedRank = formatter.format(rank);
 
       // Once the API call is complete, update the UI 
-      ApexStatsApp.updateUI(playerName, formattedKills, formattedDamage, rankScore);
+      ApexStatsApp.updateUI(playerName, rankScore, formattedRank, kills, formattedDamage);
     } catch (Exception e) {
       Platform.runLater(() -> {
         Alert alert = new Alert(AlertType.ERROR);
