@@ -36,8 +36,11 @@ public class ApexStatsApp extends Application {
     TableColumn < Player, String > playerColumn = new TableColumn < > ("Player");
     playerColumn.setCellValueFactory(new PropertyValueFactory < > ("username"));
 
-    TableColumn < Player, Integer > rankColumn = new TableColumn < > ("Rank");
+    TableColumn < Player, String > rankColumn = new TableColumn < > ("Rank");
     rankColumn.setCellValueFactory(new PropertyValueFactory < > ("rankScore"));
+
+    TableColumn < Player, String > rankScoreCoulumn = new TableColumn < > ("Rank Score");
+    rankScoreCoulumn.setCellValueFactory(new PropertyValueFactory < > ("rank"));
 
     TableColumn < Player, Integer > killsColumn = new TableColumn < > ("Kills");
     killsColumn.setCellValueFactory(new PropertyValueFactory < > ("kills"));
@@ -45,7 +48,7 @@ public class ApexStatsApp extends Application {
     TableColumn < Player, Integer > damageColumn = new TableColumn < > ("Damage");
     damageColumn.setCellValueFactory(new PropertyValueFactory < > ("damage"));
 
-    tableView.getColumns().addAll(playerColumn, rankColumn, killsColumn, damageColumn);
+    tableView.getColumns().addAll(playerColumn, rankColumn, rankScoreCoulumn, killsColumn, damageColumn);
 
     vbox = new VBox(tableView);
     vbox.setPadding(new Insets(10));
