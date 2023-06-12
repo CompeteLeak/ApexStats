@@ -77,7 +77,7 @@ public class ApexApiCall {
       String formattedRank = formatter.format(rank);
 
       // Once the API call is complete, update the UI 
-      ApexStatsApp.updateUI(playerName, rankScore, formattedRank, kills, formattedDamage);
+      ApexStatsApp.updateUI(playerName, rankScore, rank, formattedKills, formattedDamage);
     } catch (Exception e) {
       Platform.runLater(() -> {
         Alert alert = new Alert(AlertType.ERROR);

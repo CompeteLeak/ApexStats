@@ -11,6 +11,7 @@ public class YamlVars {
   public String playerThree;
   public String playerFour;
   public String playerFive;
+  public String playerSix;
 
   public void connectYaml() {
     Properties props = new Properties();
@@ -22,6 +23,7 @@ public class YamlVars {
       playerThree = props.getProperty("playerThree");
       playerFour = props.getProperty("playerFour");
       playerFive = props.getProperty("playerFive");
+      playerSix = props.getProperty("playerSix");
       apiKey = props.getProperty("api_key");
       platform1 = props.getProperty("platform1");
       platform2 = props.getProperty("platform2");

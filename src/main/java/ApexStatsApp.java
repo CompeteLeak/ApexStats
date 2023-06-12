@@ -21,7 +21,7 @@ public class ApexStatsApp extends Application {
 
   private static VBox vbox;
   private TableView tableView;
-  private static ObservableList < Player > playerList;
+  private static ObservableList playerList;
 
   public static void main(String[] args) {
     launch(args);
@@ -37,18 +37,19 @@ public class ApexStatsApp extends Application {
     playerColumn.setCellValueFactory(new PropertyValueFactory < > ("username"));
 
     TableColumn < Player, String > rankColumn = new TableColumn < > ("Rank");
-    rankColumn.setCellValueFactory(new PropertyValueFactory < > ("rankScore"));
+    rankColumn.setCellValueFactory(new PropertyValueFactory < > ("rank"));
 
-    TableColumn < Player, String > rankScoreCoulumn = new TableColumn < > ("Rank Score");
-    rankScoreCoulumn.setCellValueFactory(new PropertyValueFactory < > ("rank"));
+    //TableColumn < Player, Integer > rankScoreCoulumn = new TableColumn < > ("Rank Score");
+    //rankScoreCoulumn.setCellValueFactory(new PropertyValueFactory < > ("rankScore"));
 
-    TableColumn < Player, Integer > killsColumn = new TableColumn < > ("Kills");
+    TableColumn < Player, String > killsColumn = new TableColumn < > ("Kills");
     killsColumn.setCellValueFactory(new PropertyValueFactory < > ("kills"));
 
     TableColumn < Player, Integer > damageColumn = new TableColumn < > ("Damage");
     damageColumn.setCellValueFactory(new PropertyValueFactory < > ("damage"));
 
-    tableView.getColumns().addAll(playerColumn, rankColumn, rankScoreCoulumn, killsColumn, damageColumn);
+    tableView.getColumns().addAll(playerColumn, rankColumn, killsColumn, damageColumn);
+    sortPlayerList(); // Sort the player list initially
 
     vbox = new VBox(tableView);
     vbox.setPadding(new Insets(10));
@@ -69,20 +70,25 @@ public class ApexStatsApp extends Application {
     playerData.getPlayerData(envLoad.playerFive, envLoad.platform2);
   }
 
-  public static void updateUI(String username, String rankScore, String rank, int kills, String damage) {
+  public static void updateUI(String username, String rank, int rankScore, String kills, String damage) {
     Platform.runLater(() -> {
-      playerList.add(new Player(username, rankScore, rank, kills, damage));
+      playerList.add(new Player(username, rank, rankScore, kills, damage));
+      sortPlayerList();
     });
+  }
+
+  private static void sortPlayerList() {
+    playerList.sort(Comparator.comparingInt(Player::getRankScore).reversed());
   }
 
   public static class Player {
     private final String username;
     private final String rank;
-    private final String rankScore;
-    private final int kills;
+    private final int rankScore;
+    private final String kills;
     private final String damage;
 
-    public Player(String username, String rankScore, String rank, int kills, String damage) {
+    public Player(String username, String rank, int rankScore, String kills, String damage) {
       this.username = username;
       this.rank = rank;
       this.rankScore = rankScore;
@@ -98,11 +104,11 @@ public class ApexStatsApp extends Application {
       return rank;
     }
 
-    public String getRankScore() {
+    public int getRankScore() {
       return rankScore;
     }
 
-    public int getKills() {
+    public String getKills() {
       return kills;
     }
 
