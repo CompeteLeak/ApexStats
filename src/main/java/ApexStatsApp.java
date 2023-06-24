@@ -39,8 +39,8 @@ public class ApexStatsApp extends Application {
     TableColumn < Player, String > rankColumn = new TableColumn < > ("Rank");
     rankColumn.setCellValueFactory(new PropertyValueFactory < > ("rank"));
 
-    //TableColumn < Player, Integer > rankScoreCoulumn = new TableColumn < > ("Rank Score");
-    //rankScoreCoulumn.setCellValueFactory(new PropertyValueFactory < > ("rankScore"));
+    TableColumn < Player, Integer > rankScoreCoulumn = new TableColumn < > ("Rank Score");
+    rankScoreCoulumn.setCellValueFactory(new PropertyValueFactory < > ("rankScore"));
 
     TableColumn < Player, String > killsColumn = new TableColumn < > ("Kills");
     killsColumn.setCellValueFactory(new PropertyValueFactory < > ("kills"));
@@ -48,7 +48,7 @@ public class ApexStatsApp extends Application {
     TableColumn < Player, Integer > damageColumn = new TableColumn < > ("Damage");
     damageColumn.setCellValueFactory(new PropertyValueFactory < > ("damage"));
 
-    tableView.getColumns().addAll(playerColumn, rankColumn, killsColumn, damageColumn);
+    tableView.getColumns().addAll(playerColumn, rankColumn,rankScoreCoulumn, killsColumn, damageColumn);
     sortPlayerList(); // Sort the player list initially
 
     vbox = new VBox(tableView);
@@ -68,6 +68,7 @@ public class ApexStatsApp extends Application {
     playerData.getPlayerData(envLoad.playerThree, envLoad.platform1);
     playerData.getPlayerData(envLoad.playerFour, envLoad.platform1);
     playerData.getPlayerData(envLoad.playerFive, envLoad.platform2);
+    playerData.getPlayerData(envLoad.playerSix, envLoad.platform1);
   }
 
   public static void updateUI(String username, String rank, int rankScore, String kills, String damage) {

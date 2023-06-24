@@ -72,12 +72,12 @@ public class ApexApiCall {
       String formattedKills = formatter.format(kills);
       int damage = segments.getJSONObject("stats").getJSONObject("damage").getInt("value");
       String formattedDamage = formatter.format(damage);
-      String rankScore = segments.getJSONObject("stats").getJSONObject("rankScore").getJSONObject("metadata").getString("rankName");
-      int rank = segments.getJSONObject("stats").getJSONObject("rankScore").getInt("value");
-      String formattedRank = formatter.format(rank);
+      String rank = segments.getJSONObject("stats").getJSONObject("rankScore").getJSONObject("metadata").getString("rankName");
+      int rankScore = segments.getJSONObject("stats").getJSONObject("rankScore").getInt("value");
+      String formattedRankScore = formatter.format(rankScore);
 
       // Once the API call is complete, update the UI 
-      ApexStatsApp.updateUI(playerName, rankScore, rank, formattedKills, formattedDamage);
+      ApexStatsApp.updateUI(playerName, rank, rankScore, formattedKills, formattedDamage);
     } catch (Exception e) {
       Platform.runLater(() -> {
         Alert alert = new Alert(AlertType.ERROR);
