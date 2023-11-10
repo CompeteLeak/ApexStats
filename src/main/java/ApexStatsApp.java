@@ -1,27 +1,22 @@
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
 import java.util.Comparator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
-import java.io.File;
-import java.net.MalformedURLException;
-import javafx.scene.Parent;
-import javafx.fxml.FXMLLoader;
 
 public class ApexStatsApp extends Application {
 
-  private static VBox vbox;
-  private TableView tableView;
-  private static ObservableList playerList;
+  private static TableView < Player > tableView;
+  private static ObservableList < Player > playerList;
 
   public static void main(String[] args) {
     launch(args);
@@ -29,29 +24,29 @@ public class ApexStatsApp extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-
     playerList = FXCollections.observableArrayList();
-    tableView = new TableView < ApexStatsApp.Player > (playerList);
+    tableView = new TableView < > (playerList);
 
     TableColumn < Player, String > playerColumn = new TableColumn < > ("Player");
-    playerColumn.setCellValueFactory(new PropertyValueFactory < > ("username"));
+    playerColumn.setCellValueFactory(new PropertyValueFactory < > ("name"));
 
     TableColumn < Player, String > rankColumn = new TableColumn < > ("Rank");
-    rankColumn.setCellValueFactory(new PropertyValueFactory < > ("rank"));
+    rankColumn.setCellValueFactory(new PropertyValueFactory < > ("rankName"));
 
-    TableColumn < Player, Integer > rankScoreCoulumn = new TableColumn < > ("Rank Score");
-    rankScoreCoulumn.setCellValueFactory(new PropertyValueFactory < > ("rankScore"));
+    TableColumn < Player, Integer > rankScoreColumn = new TableColumn < > ("Rank Score");
+    rankScoreColumn.setCellValueFactory(new PropertyValueFactory < > ("rankScore"));
 
     TableColumn < Player, String > killsColumn = new TableColumn < > ("Kills");
     killsColumn.setCellValueFactory(new PropertyValueFactory < > ("kills"));
 
-    TableColumn < Player, Integer > damageColumn = new TableColumn < > ("Damage");
-    damageColumn.setCellValueFactory(new PropertyValueFactory < > ("damage"));
+    //TableColumn<Player, String> damageColumn = new TableColumn<>("Damage");
+    //damageColumn.setCellValueFactory(new PropertyValueFactory<>("damage"));
 
-    tableView.getColumns().addAll(playerColumn, rankColumn,rankScoreCoulumn, killsColumn, damageColumn);
+    //tableView.getColumns().addAll(playerColumn, rankColumn, rankScoreColumn, killsColumn, damageColumn);
+    tableView.getColumns().addAll(playerColumn, rankColumn, rankScoreColumn, killsColumn);
     sortPlayerList(); // Sort the player list initially
 
-    vbox = new VBox(tableView);
+    VBox vbox = new VBox(tableView);
     vbox.setPadding(new Insets(10));
 
     Scene scene = new Scene(vbox, 400, 300);
@@ -60,20 +55,22 @@ public class ApexStatsApp extends Application {
     primaryStage.setScene(scene);
     primaryStage.show();
 
+    ApexApiCall apiCall = new ApexApiCall();
     YamlVars envLoad = new YamlVars();
     envLoad.connectYaml();
-    ApexApiCall playerData = new ApexApiCall();
-    playerData.getPlayerData(envLoad.playerOne, envLoad.platform1);
-    playerData.getPlayerData(envLoad.playerTwo, envLoad.platform1);
-    playerData.getPlayerData(envLoad.playerThree, envLoad.platform1);
-    playerData.getPlayerData(envLoad.playerFour, envLoad.platform1);
-    playerData.getPlayerData(envLoad.playerFive, envLoad.platform2);
-    playerData.getPlayerData(envLoad.playerSix, envLoad.platform1);
+
+    apiCall.getPlayerDataByName(envLoad.apiKey, envLoad.playerOne, envLoad.platform1, 0);
+    apiCall.getPlayerDataByName(envLoad.apiKey, envLoad.playerTwo, envLoad.platform1, 0);
+    apiCall.getPlayerDataByName(envLoad.apiKey, envLoad.playerThree, envLoad.platform1, 0);
+    apiCall.getPlayerDataByName(envLoad.apiKey, envLoad.playerFour, envLoad.platform1, 0);
+    apiCall.getPlayerDataByName(envLoad.apiKey, envLoad.playerFive, envLoad.platform2, 0);
+    apiCall.getPlayerDataByName(envLoad.apiKey, envLoad.playerSix, envLoad.platform1, 0);
+    apiCall.getPlayerDataByName(envLoad.apiKey, envLoad.playerSeven, envLoad.platform1, 0);
   }
 
-  public static void updateUI(String username, String rank, int rankScore, String kills, String damage) {
+  public static void updateUI(String name, String rankName, int rankScore, String kills) {
     Platform.runLater(() -> {
-      playerList.add(new Player(username, rank, rankScore, kills, damage));
+      playerList.add(new Player(name, rankName, rankScore, kills));
       sortPlayerList();
     });
   }
@@ -83,26 +80,26 @@ public class ApexStatsApp extends Application {
   }
 
   public static class Player {
-    private final String username;
-    private final String rank;
+    private final String name;
+    private final String rankName;
     private final int rankScore;
     private final String kills;
-    private final String damage;
+    //private final String damage;
 
-    public Player(String username, String rank, int rankScore, String kills, String damage) {
-      this.username = username;
-      this.rank = rank;
+    public Player(String name, String rankName, int rankScore, String kills) {
+      this.name = name;
+      this.rankName = rankName;
       this.rankScore = rankScore;
       this.kills = kills;
-      this.damage = damage;
+      //this.damage = damage;
     }
 
-    public String getUsername() {
-      return username;
+    public String getName() {
+      return name;
     }
 
-    public String getRank() {
-      return rank;
+    public String getRankName() {
+      return rankName;
     }
 
     public int getRankScore() {
@@ -113,9 +110,9 @@ public class ApexStatsApp extends Application {
       return kills;
     }
 
-    public String getDamage() {
-      return damage;
-    }
+    // public String getDamage() {
+    //   return damage;
+    // }
   }
 
 }
