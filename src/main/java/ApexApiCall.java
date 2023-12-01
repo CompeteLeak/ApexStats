@@ -106,11 +106,17 @@ public class ApexApiCall {
         if (stat.getString("name").equals("BR Kills")) {
           brKills = stat.getInt("value");
           break;
+      int brDamage = 0;
+      for (int i = 0; i < legendData.length(); i++) {
+        JSONObject stat = legendData.getJSONObject(i);
+        if (stat.getString("name").equals("BR Damage")) {
+          brKills = stat.getInt("value");
+          break;
         }
       }
 
       // Update the UI with the retrieved information
-      ApexStatsApp.updateUI(playerName, rank, rankScore,rankDivision, formatter.format(brKills));
+      ApexStatsApp.updateUI(playerName, rank, rankScore,rankDivision, legendName,formatter.format(brKills));
     } catch (Exception e) {
       e.printStackTrace();
       Platform.runLater(() -> {
