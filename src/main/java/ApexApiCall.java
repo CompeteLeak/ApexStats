@@ -23,30 +23,7 @@ public class ApexApiCall {
   public void getPlayerDataByName(String apiKey, String playerName, String platform, int retryCount) {
     String API_URL = "https://api.mozambiquehe.re/bridge?auth=%s&player=%s&platform=%s";
     String apiUrl = String.format(API_URL, apiKey, playerName, platform);
-    //makeApiRequest(apiUrl);
-    HttpClient client = HttpClient.newHttpClient();
-    HttpRequest request = HttpRequest.newBuilder()
-      .uri(URI.create(apiUrl))
-      .timeout(Duration.ofSeconds(10))
-      .build();
-
-    client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-      .thenApply(this::handleResponse)
-      .exceptionally(ex -> {
-        if (ex.getMessage().contains("429") && retryCount < MAX_RETRIES) {
-          // Apply exponential backoff before retrying
-          try {
-            Thread.sleep(getBackoffTime(retryCount));
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
-          makeApiRequest(apiUrl, playerName, retryCount + 1);
-        } else {
-          handleError(ex);
-        }
-        return null;
-      })
-      .thenAccept(stats -> handleData(stats, playerName));
+    makeApiRequest(apiUrl,playerName, retryCount +1);
   }
 
   public void getPlayerDataByUID(String apiKey, String playerUID, String platform) {
