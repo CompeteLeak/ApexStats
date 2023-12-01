@@ -26,11 +26,11 @@ public class ApexApiCall {
     makeApiRequest(apiUrl,playerName, retryCount +1);
   }
 
-  public void getPlayerDataByUID(String apiKey, String playerUID, String platform) {
-    String API_URL = "https://api.mozambiquehe.re/bridge?auth=%s&uid=%s&platform=%s";
-    String apiUrl = String.format(API_URL, apiKey, playerUID, platform);
-    //makeApiRequest(apiUrl);
-  }
+  // public void getPlayerDataByUID(String apiKey, String playerUID, String platform) {
+  //   String API_URL = "https://api.mozambiquehe.re/bridge?auth=%s&uid=%s&platform=%s";
+  //   String apiUrl = String.format(API_URL, apiKey, playerUID, platform);
+  //   //makeApiRequest(apiUrl);
+  // }
 
   private void makeApiRequest(String apiUrl, String playerName, int retryCount) {
     HttpClient client = HttpClient.newHttpClient();
@@ -93,6 +93,7 @@ public class ApexApiCall {
       JSONObject global = json.getJSONObject("global");
       int rankScore = global.getJSONObject("rank").getInt("rankScore");
       String rank = global.getJSONObject("rank").getString("rankName");
+      int rankDivision = global.getJSONObject("rank").getInt("rankDiv");
 
       // Extracting data from the "legends" section for the selected legend (Vantage)
       JSONObject legends = json.getJSONObject("legends");
@@ -109,7 +110,7 @@ public class ApexApiCall {
       }
 
       // Update the UI with the retrieved information
-      ApexStatsApp.updateUI(playerName, rank, rankScore, formatter.format(brKills));
+      ApexStatsApp.updateUI(playerName, rank, rankScore,rankDivision, formatter.format(brKills));
     } catch (Exception e) {
       e.printStackTrace();
       Platform.runLater(() -> {
