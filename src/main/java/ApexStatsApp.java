@@ -45,11 +45,13 @@ public class ApexStatsApp extends Application {
     TableColumn < Player, String > killsColumn = new TableColumn < > ("Kills");
     killsColumn.setCellValueFactory(new PropertyValueFactory < > ("kills"));
 
-    //TableColumn<Player, String> damageColumn = new TableColumn<>("Damage");
-    //damageColumn.setCellValueFactory(new PropertyValueFactory<>("damage"));
+    TableColumn<Player, String> damageColumn = new TableColumn<>("Damage");
+    damageColumn.setCellValueFactory(new PropertyValueFactory<>("damage"));
 
-    //tableView.getColumns().addAll(playerColumn, rankColumn, rankScoreColumn, killsColumn, damageColumn);
-    tableView.getColumns().addAll(playerColumn, rankColumn, rankScoreColumn, rankDivColumn, legendCoulumn, killsColumn);
+    TableColumn<Player, String> winsColumn = new TableColumn<>("Wins");
+    winsColumn.setCellValueFactory(new PropertyValueFactory<>("wins"));
+
+    tableView.getColumns().addAll(playerColumn, rankColumn, rankScoreColumn, rankDivColumn, legendCoulumn, killsColumn, damageColumn, winsColumn);
     sortPlayerList(); // Sort the player list initially
 
     VBox vbox = new VBox(tableView);
@@ -74,9 +76,9 @@ public class ApexStatsApp extends Application {
     apiCall.getPlayerDataByName(envLoad.apiKey, envLoad.playerSeven, envLoad.platform1, 0);
   }
 
-  public static void updateUI(String name, String rankName, int rankScore, int rankDiv, String legendName, String kills) {
+  public static void updateUI(String name, String rankName, int rankScore, int rankDiv, String legendName, String kills, String damage, String wins) {
     Platform.runLater(() -> {
-      playerList.add(new Player(name, rankName, rankScore, rankDiv, legendName, kills));
+      playerList.add(new Player(name, rankName, rankScore, rankDiv, legendName, kills, damage, wins));
       sortPlayerList();
     });
   }
@@ -92,16 +94,18 @@ public class ApexStatsApp extends Application {
     private final int rankDiv;
     public final String legendName;
     private final String kills;
-    //private final String damage;
+    private final String damage;
+    private final String wins;
 
-    public Player(String name, String rankName, int rankScore, int rankDiv, String legendName, String kills) {
+    public Player(String name, String rankName, int rankScore, int rankDiv, String legendName, String kills, String damage, String wins) {
       this.name = name;
       this.rankName = rankName;
       this.rankScore = rankScore;
       this.rankDiv = rankDiv;
       this.legendName = legendName;
       this.kills = kills;
-      //this.damage = damage;
+      this.damage = damage;
+      this.wins = wins;
     }
 
     public String getName() {
@@ -128,9 +132,13 @@ public class ApexStatsApp extends Application {
       return kills;
     }
 
-    // public String getDamage() {
-    //   return damage;
-    // }
+    public String getDamage() {
+      return damage;
+   }
+
+   public String getWins(){
+      return wins;
+   }
   }
 
 }

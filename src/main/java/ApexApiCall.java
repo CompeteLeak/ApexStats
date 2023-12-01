@@ -101,22 +101,24 @@ public class ApexApiCall {
       String legendName = selectedLegend.getString("LegendName");
       JSONArray legendData = selectedLegend.getJSONArray("data");
       int brKills = 0;
+      int brDamage = 0;
+      int brWins = 0;
       for (int i = 0; i < legendData.length(); i++) {
         JSONObject stat = legendData.getJSONObject(i);
         if (stat.getString("name").equals("BR Kills")) {
           brKills = stat.getInt("value");
-          break;
-      int brDamage = 0;
-      for (int i = 0; i < legendData.length(); i++) {
-        JSONObject stat = legendData.getJSONObject(i);
+        }
         if (stat.getString("name").equals("BR Damage")) {
-          brKills = stat.getInt("value");
-          break;
+          brDamage = stat.getInt("value");
+        }
+        if (stat.getString("name").equals("BR Wins")) {
+          brWins = stat.getInt("value");
+          //break;
         }
       }
 
       // Update the UI with the retrieved information
-      ApexStatsApp.updateUI(playerName, rank, rankScore,rankDivision, legendName,formatter.format(brKills));
+      ApexStatsApp.updateUI(playerName, rank, rankScore,rankDivision,legendName, formatter.format(brKills), formatter.format(brDamage), formatter.format(brWins));
     } catch (Exception e) {
       e.printStackTrace();
       Platform.runLater(() -> {
