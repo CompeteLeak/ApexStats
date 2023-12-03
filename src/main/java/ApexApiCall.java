@@ -108,7 +108,7 @@ public class ApexApiCall {
             }
 
             // Update the UI with the retrieved information
-            ApexStatsApp.updateUI(playerName, rank, formatter.format(rankScore), rankDivision, legendName, formatter.format(brKills), formatter.format(brDamage), formatter.format(brWins));
+            ApexStatsApp.updateUI(playerName, rank, rankDivision,formatter.format(rankScore),legendName, formatter.format(brKills), formatter.format(brDamage), formatter.format(brWins));
         } catch (Exception e) {
             e.printStackTrace();
             Platform.runLater(() -> {
