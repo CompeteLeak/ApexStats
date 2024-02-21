@@ -6,8 +6,7 @@
 name: Latest Leaderboard
 
 on:
-  schedule:
-    - cron: '30 19 * * *'
+  push
 
 jobs:
   build:
@@ -15,5 +14,5 @@ jobs:
     steps: 
       - name: Build leaderboard
         run:
-          java --module-path /your/path/to//javafx-sdk-17.0.7/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp  
+          java --module-path ./javafx-sdk-22/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp  
   
