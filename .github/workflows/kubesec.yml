@@ -10,9 +10,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     container: 
       image: ghcr.io/dgthomp3/cronic:v1
+      env:
+        NODE_ENV: development
     steps: 
       - name: Build leaderboard
         run:

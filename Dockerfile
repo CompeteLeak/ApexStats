@@ -1,8 +1,9 @@
 # Using Docker's UBI8 Container as BASE
 FROM redhat/ubi8:8.9
 
-# Connect to repository
+# Labels
 LABEL org.opencontainers.image.source=https://github.com/CompeteLeak/ApexStats
+LABEL org.opencontainers.image.description ubi8:8.9 image w/ mvn,jdk17,javafx22
 
 # Set us up
 RUN yum install -y wget vim unzip
