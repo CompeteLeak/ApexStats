@@ -16,5 +16,4 @@ jobs:
     steps: 
       - name: Build leaderboard
         run:
-          java --module-path ./javafx-sdk-22/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp  
-  
+          java --module-path ./javafx-sdk-22/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp
