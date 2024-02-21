@@ -10,7 +10,8 @@ on:
 
 jobs:
   build:
-    runs-on: ghcr.io/dgthomp3/cronic:v1
+    runs-on: ubuntu-latest
+    container: ghcr.io/dgthomp3/cronic:v1
     steps: 
       - name: Build leaderboard
         run:
