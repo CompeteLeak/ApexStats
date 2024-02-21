@@ -11,7 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ghcr.io/dgthomp3/cronic:v1
+    container: 
+      image: ghcr.io/dgthomp3/cronic:v1
     steps: 
       - name: Build leaderboard
         run:
