@@ -1,0 +1,17 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Latest Leaderboard
+
+on:
+  schedule:
+    - cron: '30 19 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest #DO: Make Docker Container
+    steps: 
+      - java --module-path /your/path/to//javafx-sdk-17.0.7/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp  
+  
