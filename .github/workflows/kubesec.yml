@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest #DO: Make Docker Container
+    runs-on: ghcr.io/dgthomp3/cronic:v1
     steps: 
       - name: Build leaderboard
         run:
