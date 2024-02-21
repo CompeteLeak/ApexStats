@@ -13,5 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest #DO: Make Docker Container
     steps: 
-      - java --module-path /your/path/to//javafx-sdk-17.0.7/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp  
+      - name: Build leaderboard
+        run:
+          java --module-path /your/path/to//javafx-sdk-17.0.7/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp  
   
