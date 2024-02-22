@@ -10,12 +10,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest-large
     container: 
       image: ghcr.io/dgthomp3/cronic:v1
       env:
         NODE_ENV: development
     steps: 
-      - name: Build leaderboard
+      - name: Build Leaderboard
         run:
           java --module-path ./javafx-sdk-22/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp
