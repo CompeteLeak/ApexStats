@@ -1,6 +1,5 @@
 #Ignore Env Vars 
 /resources/config.yaml
-config.yaml
 
 # General
 .DS_Store

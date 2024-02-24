@@ -12,15 +12,15 @@ This is a Java app that will be a showcase of my Apex Stats.
 
 - Apache Maven 3.9.6: <https://maven.apache.org/download.cgi?>
 
-## Configure YML (config.yml) with contens below
-
-To generate an API key: <https://portal.apexlegendsapi.com>
+## Configure YML (config.yml) with contents below
 
 ```
 username: ****
 api_key: ************
 platform: ***
 ```
+
+To generate an API key: <https://portal.apexlegendsapi.com>
 
 ## Running the project after cloning 
 - cd into the project 
@@ -33,8 +33,4 @@ mvn package
 - Run Project 
 ```bash
 java --module-path </PATH/TO>/javafx-sdk-17.0.7/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp
-```
-or
-```bash
-java --module-path <PATH/TO>/javafx-sdk-17.0.7/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT.jar ApexStatsApp
 ```
