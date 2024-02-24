@@ -1,5 +1,5 @@
 # ApexStats
-Description 
+### Description 
 This is a Java app that will be a showcase of my Apex Stats 
 
 Dependencies 
@@ -23,19 +23,15 @@ Compile project
 mvn package 
 
 Run Project 
-
+```bash
 java --module-path /your/path/to//javafx-sdk-17.0.7/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp
-
+```
 or
-
+```bash
 java --module-path /your/path/to//javafx-sdk-17.0.7/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT.jar ApexStatsApp
+```
 --------------------------------------------
 ***** Lastly there is a resources file in the root directory. YOU NEED TO ADD A config.yaml there 
 username: ****
 api_key: ************
 platform: ***
-
-
-
-
-
