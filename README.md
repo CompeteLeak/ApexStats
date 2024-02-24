@@ -2,7 +2,7 @@
 ### Description 
 This is a Java app that will be a showcase of my Apex Stats 
 
-Dependencies 
+#### Dependencies 
 ===============================================================
 Java version 17 
 https://www.oracle.com/java/technologies/downloads/
@@ -12,8 +12,6 @@ https://openjfx.io/
 
 Apache Maven
 https://maven.apache.org/download.cgi?.
-
-===============================================
 
 Running the project after cloning 
 -------------------------------------------------------------
