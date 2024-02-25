@@ -32,5 +32,5 @@ mvn package
 
 - Run Project 
 ```bash
-java --module-path </PATH/TO>/javafx-sdk-17.0.7/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp
+java --module-path </PATH/TO>/javafx-sdk-17.0.10/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp
 ```
