@@ -20,6 +20,6 @@ jobs:
         NODE_ENV: development
     steps: 
       - name: Build Leaderboard
-        run:
+        run: |
           mvn package
           java --module-path /javafx-sdk-17.0.10/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp
