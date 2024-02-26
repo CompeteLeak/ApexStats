@@ -21,5 +21,6 @@ jobs:
     steps: 
       - name: Build Leaderboard
         run: |
-          ls -l /__w/ApexStats/ApexStats
+          ls -l /github/home
+          git status
           
