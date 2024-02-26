@@ -18,9 +18,11 @@ jobs:
       image: ghcr.io/dgthomp3/cronic:v2
       env:
         NODE_ENV: development
-    steps: 
-      - name: Build Leaderboard
-        run: |
-          ls -l /github/home
-          git status
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4 
+      - name: Build Maven
+        run: 
+          mvn package
+          
           
