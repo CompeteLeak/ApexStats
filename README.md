@@ -12,7 +12,7 @@ This is a Java app that will be a showcase of my Apex Stats.
 
 - Apache Maven 3.9.6: <https://maven.apache.org/download.cgi?>
 
-## Configure YML (config.yml) with contents below
+## Configure YML (config.yaml) with contents below
 
 ```
 username: ****

@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: 
-      image: ghcr.io/dgthomp3/cronic:v2
+      image: ghcr.io/dgthomp3/cronic:v3
       env:
         NODE_ENV: development
     steps:

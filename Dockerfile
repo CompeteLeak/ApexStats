@@ -10,6 +10,10 @@ ARG MVN_VERSION=apache-maven-3.9.6-bin
 LABEL org.opencontainers.image.source=https://github.com/CompeteLeak/ApexStats
 LABEL org.opencontainers.image.description ubi9:9.3 image w/ mvn,jdk17,javafx22
 
+# Send up config.yaml
+RUN mkdir /resources
+COPY resources/ /resources/
+
 # Set us up
 RUN yum install -y wget vim unzip
 
