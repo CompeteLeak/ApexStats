@@ -1,41 +1,36 @@
 # ApexStats
-Description 
-This is a Java app that will be a showcase of my Apex Stats 
 
-Dependencies 
-===============================================================
-Java version 17 
-https://www.oracle.com/java/technologies/downloads/
+## Description 
 
-JavaFX Version 17 
-https://openjfx.io/
+This is a Java app that will be a showcase of my Apex Stats. 
 
-Apache Maven
-https://maven.apache.org/download.cgi?.
+## Dependencies
 
-===============================================
+- Java version 17: <https://www.oracle.com/java/technologies/downloads/>
 
-Running the project after cloning 
--------------------------------------------------------------
-terminal - within project directory 
+- JavaFX Version 17.0.10: <https://openjfx.io/>
 
-Compile project 
-mvn package 
+- Apache Maven 3.9.6: <https://maven.apache.org/download.cgi?>
 
-Run Project 
+## Configure YML (config.yml) with contents below
 
-java --module-path /your/path/to//javafx-sdk-17.0.7/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp
-
-or
-
-java --module-path /your/path/to//javafx-sdk-17.0.7/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT.jar ApexStatsApp
---------------------------------------------
-***** Lastly there is a resources file in the root directory. YOU NEED TO ADD A config.yaml there 
+```
 username: ****
 api_key: ************
 platform: ***
+```
 
+To generate an API key: <https://portal.apexlegendsapi.com>
 
+## Running the project after cloning 
+- cd into the project 
 
+- Compile project
+``` bash
+mvn package
+```
 
-
+- Run Project 
+```bash
+java --module-path </PATH/TO>/javafx-sdk-17.0.10/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp
+```
