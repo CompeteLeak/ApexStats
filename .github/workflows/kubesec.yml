@@ -21,6 +21,6 @@ jobs:
     steps: 
       - name: Build Leaderboard
         run: |
-          ls /__w/ApexStats/ApexStats
-          mvn package -f ./pom.xml
+          cd /__w/ApexStats/ApexStats
+          mvn package
           java --module-path "/javafx-sdk-17.0.10/lib" --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp
