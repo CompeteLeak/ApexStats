@@ -12,10 +12,13 @@ LABEL org.opencontainers.image.description ubi9:9.3 image w/ mvn,jdk17,javafx22
 
 # Send up config.yaml
 RUN mkdir /resources
-COPY resources/ /resources/
+COPY resources/ /resources
 
 # Set us up
 RUN yum install -y wget vim unzip libX11
+RUN mv /resources/centos8.repo /etc/yum.repos.d/
+RUN rpm --import https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official
+RUN dnf install -y xorg-x11-server-Xvfb
 
 # Install JDK17
 RUN wget https://download.oracle.com/java/17/latest/${JDK_VERSION}.rpm
