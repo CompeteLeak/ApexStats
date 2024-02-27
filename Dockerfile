@@ -15,7 +15,7 @@ RUN mkdir /resources
 COPY resources/ /resources/
 
 # Set us up
-RUN yum install -y wget vim unzip
+RUN yum install -y wget vim unzip libX11
 
 # Install JDK17
 RUN wget https://download.oracle.com/java/17/latest/${JDK_VERSION}.rpm
@@ -25,6 +25,7 @@ RUN yum install -y ./${JDK_VERSION}.rpm
 RUN wget https://download2.gluonhq.com/openjfx/17.0.1/${JFX_VERSION}.zip
 RUN unzip ${JFX_VERSION}.zip
 RUN rm -rf ${JFX_VERSION}.zip
+RUN cp /javafx-sdk-17.0.1/lib/libglass.so /usr/lib64/
 
 # Install apache-maven 3.9.6
 RUN wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/${MVN_VERSION}.tar.gz
