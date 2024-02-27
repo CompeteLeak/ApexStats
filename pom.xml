@@ -55,9 +55,11 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.13.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.glassfish.maven.plugin/maven-glassfish-plugin -->
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>glass</artifactId>
+            <groupId>org.glassfish.maven.plugin</groupId>
+            <artifactId>maven-glassfish-plugin</artifactId>
+            <version>2.1</version>
         </dependency>
     </dependencies>
     <build>
