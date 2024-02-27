@@ -3,7 +3,7 @@ FROM --platform=linux/amd64 redhat/ubi9:9.3
 
 # Version variables
 ARG JDK_VERSION=jdk-17_linux-x64_bin
-ARG JFX_VERSION=openjfx-17.0.10_linux-x64_bin-sdk
+ARG JFX_VERSION=openjfx-17.0.1_linux-x64_bin-sdk
 ARG MVN_VERSION=apache-maven-3.9.6-bin
 
 # Labels
@@ -21,8 +21,8 @@ RUN yum install -y wget vim unzip
 RUN wget https://download.oracle.com/java/17/latest/${JDK_VERSION}.rpm
 RUN yum install -y ./${JDK_VERSION}.rpm
 
-# Install JavaFX 17.0.10
-RUN wget https://download2.gluonhq.com/openjfx/17.0.10/${JFX_VERSION}.zip
+# Install JavaFX 17.0.1
+RUN wget https://download2.gluonhq.com/openjfx/17.0.1/${JFX_VERSION}.zip
 RUN unzip ${JFX_VERSION}.zip
 RUN rm -rf ${JFX_VERSION}.zip
 
