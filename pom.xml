@@ -19,27 +19,27 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.13</version>
         </dependency>
-         <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-base</artifactId>
-        <version>17.0.1</version>
-    </dependency>
-     <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-controls</artifactId>
-        <version>17.0.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-graphics</artifactId>
-        <version>17.0.1</version>
-    </dependency>
-    <!-- JavaFX fxml module -->
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-fxml</artifactId>
-        <version>17.0.1</version>
-    </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>17.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>17.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>17.0.1</version>
+        </dependency>
+        <!-- JavaFX fxml module -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>17.0.1</version>
+        </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -56,10 +56,8 @@
             <version>2.13.0</version>
         </dependency>
         <dependency>
-            <groupId>org.glassfish.main.javaee-api</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>glass</artifactId>
         </dependency>
     </dependencies>
     <build>
