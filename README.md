@@ -12,7 +12,7 @@ This is a Java app that will be a showcase of my Apex Stats.
 
 - Apache Maven 3.9.6: <https://maven.apache.org/download.cgi?>
 
-## Configure YML (config.yml) with contents below
+## Configure YML (config.yaml) with contents below
 
 ```
 username: ****
@@ -32,5 +32,5 @@ mvn package
 
 - Run Project 
 ```bash
-java --module-path </PATH/TO>/javafx-sdk-17.0.10/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp
+java --module-path </PATH/TO>/javafx-sdk-17.0.1/lib --add-modules javafx.controls,javafx.fxml -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp
 ```

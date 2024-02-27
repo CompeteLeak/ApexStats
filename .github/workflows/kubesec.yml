@@ -1,0 +1,29 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Latest Leaderboard
+
+on:
+  push:
+    branches: ["dgthomp3-patch-1"]
+  schedule:
+    - cron: '00 00 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/dgthomp3/cronic:v3
+      env:
+        NODE_ENV: development
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4 
+      - name: Build Maven
+        run: 
+          mvn package
+      - name: Build Leaderboard
+        run:
+          xvfb-run java --module-path /javafx-sdk-17.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics -cp target/ApexStats-1.0-SNAPSHOT-jar-with-dependencies.jar ApexStatsApp    
