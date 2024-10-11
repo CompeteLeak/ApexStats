@@ -71,6 +71,7 @@ public class ApexStatsApp extends Application {
         apiCall.getPlayerDataByName(envLoad.apiKey, envLoad.playerFive, envLoad.platform2, 0);
         apiCall.getPlayerDataByName(envLoad.apiKey, envLoad.playerSix, envLoad.platform1, 0);
         apiCall.getPlayerDataByName(envLoad.apiKey, envLoad.playerSeven, envLoad.platform1, 0);
+        apiCall.getPlayerDataByName(envLoad.apiKey, envLoad.playerEight, envLoad.platform1, 0);
     }
 
     public static void updateUI(String name, String rankName, int rankDiv, String rankScore, String legendName, String kills, String damage, String wins) {

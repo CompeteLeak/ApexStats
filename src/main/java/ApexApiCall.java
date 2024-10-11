@@ -9,10 +9,44 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.security.cert.X509Certificate;
+import java.net.http.HttpClient;
 
 public class ApexApiCall {
     private static final int MAX_RETRIES = 3;
     private static final int INITIAL_BACKOFF_DELAY = 1000; // Initial delay in milliseconds
+
+
+private HttpClient createHttpClient() {
+    try {
+        // Create a trust manager that does not validate certificate chains
+        TrustManager[] trustAllCerts = new TrustManager[]{
+            new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {}
+
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {}
+            }
+        };
+
+        // Install the all-trusting trust manager
+        SSLContext sslContext = SSLContext.getInstance("SSL");
+        sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+
+        // Create an HttpClient that uses the custom SSL context
+        return HttpClient.newBuilder()
+                .sslContext(sslContext)
+                .build();
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
+}
 
     private long getBackoffTime(int retryCount) {
         // Exponential backoff formula (adjust as needed)
@@ -27,6 +61,8 @@ public class ApexApiCall {
 
     private void makeApiRequest(String apiUrl, String playerName, int retryCount) {
         HttpClient client = HttpClient.newHttpClient();
+        //HttpClient client = createHttpClient();
+
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(apiUrl)).timeout(Duration.ofSeconds(10)).build();
 
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
